@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from './Header';
+import DisplayFilms from './DisplayFilms';
 // import 'isometric-fetch';
 // import 'es6-promise';
 
@@ -15,17 +16,7 @@ class App extends Component {
             .then((data) => {
                 console.log(data);
                 this.setState({
-                    filmsArr: data.map((film) => {
-                        return (
-                            <div className="card col-md-3" key={film.id}>
-                                <div className="card-body">
-                                    <h5 className="card-title">{film.title}</h5>
-                                    <p className="card-text">{film.description}</p>
-                                    <p className="card-text"><strong>{film.release_date}</strong></p>
-                                </div>
-                            </div>
-                        );
-                    })
+                    filmsArr: <DisplayFilms films={data}/>
                 })
             })
             .catch(err => console.log(err));
