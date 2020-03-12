@@ -1,34 +1,58 @@
 import React, { Component } from 'react';
 import Header from './Header';
-import DisplayFilms from './DisplayFilms';
+import FilmFetch from './FilmFetch';
+import PeopleFetch from './PeopleFetch';
+import ListGroup from './ListGroup';
+import ListGroupPeople from './ListGroupPeople';
 // import 'isometric-fetch';
 // import 'es6-promise';
 
 class App extends Component {
 
     state = {
-        filmsArr: []
+        filmsArr: [],
+        peopleArr: [],
+        showFilms: false,
+        showPeople: false
+    }
+
+    handleFilmClick = () => {
+        this.setState({
+            showFilms: true,
+            showPeople: false
+        })
+    }
+
+    handlePeopleClick = () => {
+        this.setState({
+            showFilms: false,
+            showPeople: true
+        })
     }
 
     componentDidMount() {
-        fetch('https://ghibliapi.herokuapp.com/films')
-            .then(response => response.json())
-            .then((data) => {
-                console.log(data);
-                this.setState({
-                    filmsArr: <DisplayFilms films={data}/>
-                })
-            })
-            .catch(err => console.log(err));
+        FilmFetch(this);
+        PeopleFetch(this);
     }
+
     render() {
-        return (
-            <React.Fragment>
-                <Header />
-                <hr></hr>
-                <div className='row text-center'>{this.state.filmsArr}</div>
-            </React.Fragment >
-        );
+        if (this.state.showFilms) {
+            return (
+                <div>
+                    <Header handleFilmClick={this.handleFilmClick} handlePeopleClick={this.handlePeopleClick} />
+                    <ListGroup arr={this.state.filmsArr} />
+                </div>
+            );
+        } else if (this.state.showPeople) {
+            return (
+                <div>
+                    <Header handleFilmClick={this.handleFilmClick} handlePeopleClick={this.handlePeopleClick} />
+                    <ListGroupPeople arr={this.state.peopleArr} />
+                </div>
+            );
+        } else {
+            return <Header handleFilmClick={this.handleFilmClick} handlePeopleClick={this.handlePeopleClick} />;
+        }
     }
 }
 

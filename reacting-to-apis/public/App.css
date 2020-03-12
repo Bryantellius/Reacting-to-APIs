@@ -1,0 +1,14 @@
+#filmsTitles {
+    overflow: scroll;
+    height: 200px;
+}
+
+#peopleNames {
+    overflow: scroll;
+    height: 200px;
+}
+
+.jumbotron {
+    background-image: url('http://getwallpapers.com/wallpaper/full/3/b/e/654126.jpg');
+    background-size: cover;
+}
